@@ -1,5 +1,6 @@
 import os
 from flask import Flask, flash, request, redirect, url_for
+from flask import send_from_directory
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = './uploads'
@@ -31,10 +32,25 @@ def upload_file():
             return redirect(url_for('download_file', name=filename))
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
+    <title>Apply for your Visa</title>
+    <h1>Apply for your Visa</h1>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
-      <input type=submit value=Upload>
+    <div class="form-example">
+        <label for="name">Enter your name: </label>
+        <input type="text" name="name" id="name" required />
+    </div>
+    <div class="form-example">
+        <label for="email">Enter your email: </label>
+        <input type="email" name="email" id="email" required />
+    </div>
+    <div class="form-example">
+        <input type="submit" value="Submit!" />
+    </div>
     </form>
     '''
+
+@app.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+
