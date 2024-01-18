@@ -1,4 +1,4 @@
-import os, shortuuid
+import os, shortuuid, json
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 
@@ -33,12 +33,14 @@ def upload_file():
 
         face_image_filepath = os.path.join(user_folder, unique_id + '_face_image.jpg')
         passport_image_filepath = os.path.join(user_folder, unique_id + '_passport_image.jpg')
+        json_user_data_filepath = os.path.join(user_folder, unique_id + '_user_data.json')
+        
         face_image_filename = unique_id + '_face_image.jpg'
         request.files['face_image'].save(os.path.join(user_folder, face_image_filename))
         passport_image_filename = unique_id + '_passport_image.jpg'
         request.files['passport_image'].save(os.path.join(user_folder, passport_image_filename))
 
-        user_data = {
+        json_user_data = {
             'full_name': request.form['full_name'],
             'email': request.form['email'],
             'passport_number': request.form['passport_number'],
@@ -49,7 +51,11 @@ def upload_file():
             'port_of_arrival': request.form['port_of_arrival'],
             'face_image_filepath': face_image_filepath,
             'passport_image_filepath': passport_image_filepath,
+            'json_user_data_filepath': json_user_data_filepath,
         }
+
+        with open(json_user_data_filepath, 'w', encoding='utf-8') as f:
+            json.dump(json_user_data, f, ensure_ascii=False, indent=4)
         
         return render_template('success.html', unique_id=unique_id)
     
