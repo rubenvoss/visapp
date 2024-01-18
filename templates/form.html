@@ -1,21 +1,3 @@
-<!-- <!doctype html>
-<title>Apply for your Visa</title>
-<h1>Apply for your Visa</h1>
-<form method=post enctype=multipart/form-data>
-  <input type=file name=file>
-<div class="form-example">
-    <label for="name">Enter your name: </label>
-    <input type="text" name="name" id="name" required />
-</div>
-<div class="form-example">
-    <label for="email">Enter your email: </label>
-    <input type="email" name="email" id="email" required />
-</div>
-<div class="form-example">
-    <input type="submit" value="Submit!" />
-</div>
-</form> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,19 +41,19 @@
 
 <form method="post" enctype="multipart/form-data">
     <label for="full_name">Full Name:</label>
-    <input type="text" id="full_name" name="full_name" required>
+    <input type="text" id="full_name" name="full_name">
 
     <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+    <input type="date" id="dob" name="dob">
 
     <label for="passport_number">Passport Number:</label>
-    <input type="text" id="passport_number" name="passport_number" required>
+    <input type="text" id="passport_number" name="passport_number">
 
     <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality" required>
+    <input type="text" id="nationality" name="nationality">
 
     <label for="email">Email Address:</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email">
 
     <label for="visa_type">Visa Type:</label>
     <select id="visa_type" name="visa_type">
@@ -108,11 +90,11 @@
         <!-- Add more options as needed -->
     </select>
 
-    <label for="face_photo">Clear and Recent Photo of Your Face:</label>
-    <input type="file" id="face_photo" name="face_photo">
+    <label for="face_image">Clear and Recent Photo of Your Face:</label required>
+    <input type="file" id="face_image" name="face_image">
 
     <label for="passport_image">Passport Image:</label>
-    <input type="file" id="passport_image" name="passport_image">
+    <input type="file" id="passport_image" name="passport_image" required>
 
     <button type="submit">Submit</button>
 </form>
