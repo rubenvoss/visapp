@@ -1,0 +1,121 @@
+<!-- <!doctype html>
+<title>Apply for your Visa</title>
+<h1>Apply for your Visa</h1>
+<form method=post enctype=multipart/form-data>
+  <input type=file name=file>
+<div class="form-example">
+    <label for="name">Enter your name: </label>
+    <input type="text" name="name" id="name" required />
+</div>
+<div class="form-example">
+    <label for="email">Enter your email: </label>
+    <input type="email" name="email" id="email" required />
+</div>
+<div class="form-example">
+    <input type="submit" value="Submit!" />
+</div>
+</form> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Form with Multiple File Uploads</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<form method="post" enctype="multipart/form-data">
+    <label for="full_name">Full Name:</label>
+    <input type="text" id="full_name" name="full_name" required>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label for="passport_number">Passport Number:</label>
+    <input type="text" id="passport_number" name="passport_number" required>
+
+    <label for="nationality">Nationality:</label>
+    <input type="text" id="nationality" name="nationality" required>
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="visa_type">Visa Type:</label>
+    <select id="visa_type" name="visa_type">
+        <option value="tourist">Tourist</option>
+        <option value="business">Business</option>
+        <!-- Add more options as needed -->
+    </select>
+
+    <label for="processing_time">Processing Time:</label>
+    <select id="processing_time" name="processing_time">
+        <option value="standard">Standard</option>
+        <option value="express">Express</option>
+        <!-- Add more options as needed -->
+    </select>
+
+    <label for="port_of_arrival">Port of Arrival:</label>
+    <select id="port_of_arrival" name="port_of_arrival">
+        <option value="airport1">Airport 1</option>
+        <option value="airport2">Airport 2</option>
+        <!-- Add more options as needed -->
+    </select>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select>
+
+    <label for="nationality_dropdown">Nationality:</label>
+    <select id="nationality_dropdown" name="nationality_dropdown">
+        <option value="country1">Country 1</option>
+        <option value="country2">Country 2</option>
+        <!-- Add more options as needed -->
+    </select>
+
+    <label for="face_photo">Clear and Recent Photo of Your Face:</label>
+    <input type="file" id="face_photo" name="face_photo">
+
+    <label for="passport_image">Passport Image:</label>
+    <input type="file" id="passport_image" name="passport_image">
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
