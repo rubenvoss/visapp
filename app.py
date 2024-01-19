@@ -1,6 +1,43 @@
 import os, shortuuid, json
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template
+
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
+from wtforms import StringField, DateField, SubmitField, EmailField
+from wtforms.validators import DataRequired, InputRequired, Length
 from werkzeug.utils import secure_filename
+
+def make_user_folder(user_id):
+    user_folder_filepath = os.path.join(app.config['USERS_FOLDER'], user_id)
+    try:
+        os.mkdir(user_folder_filepath)
+    except Exception as e:
+        print(e)
+    return user_folder_filepath
+
+def save_json_data(user_id, user_folder_filepath, json_user_data):
+    json_user_data_filepath = os.path.join(user_folder_filepath, user_id + '_user_data.json')
+    with open(json_user_data_filepath, 'w', encoding='utf-8') as file:
+        json.dump(json_user_data, file, indent=4, sort_keys=True, default=str)
+
+def secure_user_email(email):
+    email = email.replace('@', '_')
+    email = email.replace('.', '_')
+    return secure_filename(email)
+
+def make_json_data(form):
+    json_data = {}
+    for field in form:
+        json_data[field.name] = field.data
+    return json_data
+
+class application_form(FlaskForm):
+    full_name = StringField('Full Name:', validators=[DataRequired(), Length(min=3, max=100)])
+    email = EmailField('Email:', validators=[DataRequired()])
+    passport_number = StringField('Passport Number:', validators=[DataRequired(), Length(min=3, max=9)])
+    dob = DateField('Date of Birth:', validators=[DataRequired()])
+    face_image = FileField(validators=[FileRequired()])
+    submit = SubmitField('Submit')
 
 USERS_FOLDER = './users'
 ALLOWED_EXTENSIONS = {'heic', 'HEIC', 'png', 'jpg', 'jpeg', 'gif'}
@@ -24,39 +61,32 @@ def index():
     return render_template('index.html')
 
 @app.route('/form', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
+def form():
+    form = application_form()
+
+    if form.validate_on_submit():
+
+
+        user_id = secure_user_email(email=form.email.data)
+        user_folder_filepath = make_user_folder(user_id=user_id)
+        
+        json_user_data = make_json_data(form=form)
+
+        save_json_data(user_id=user_id, user_folder_filepath=user_folder_filepath, json_user_data=json_user_data)
+
         unique_id = str(shortuuid.uuid())
-        user_folder = os.path.join(app.config['USERS_FOLDER'], unique_id)
+        # user_folder = os.path.join(app.config['USERS_FOLDER'], unique_id)
 
-        os.mkdir(user_folder)
 
-        face_image_filepath = os.path.join(user_folder, unique_id + '_face_image.jpg')
-        passport_image_filepath = os.path.join(user_folder, unique_id + '_passport_image.jpg')
-        json_user_data_filepath = os.path.join(user_folder, unique_id + '_user_data.json')
+        # face_image_filepath = os.path.join(user_folder, unique_id + '_face_image.jpg')
+        # passport_image_filepath = os.path.join(user_folder, unique_id + '_passport_image.jpg')
         
-        face_image_filename = unique_id + '_face_image.jpg'
-        request.files['face_image'].save(os.path.join(user_folder, face_image_filename))
-        passport_image_filename = unique_id + '_passport_image.jpg'
-        request.files['passport_image'].save(os.path.join(user_folder, passport_image_filename))
+        # face_image_filename = unique_id + '_face_image.jpg'
+        # request.files['face_image'].save(os.path.join(user_folder, face_image_filename))
+        # passport_image_filename = unique_id + '_passport_image.jpg'
+        # request.files['passport_image'].save(os.path.join(user_folder, passport_image_filename))
 
-        json_user_data = {
-            'full_name': request.form['full_name'],
-            'email': request.form['email'],
-            'passport_number': request.form['passport_number'],
-            'dob': request.form['dob'],
-            'nationality': request.form['nationality'],
-            'visa_type': request.form['visa_type'],
-            'processing_time': request.form['processing_time'],
-            'port_of_arrival': request.form['port_of_arrival'],
-            'face_image_filepath': face_image_filepath,
-            'passport_image_filepath': passport_image_filepath,
-            'json_user_data_filepath': json_user_data_filepath,
-        }
 
-        with open(json_user_data_filepath, 'w', encoding='utf-8') as f:
-            json.dump(json_user_data, f, ensure_ascii=False, indent=4)
-        
+
         return render_template('success.html', unique_id=unique_id)
-    
-    return render_template('form.html')
+    return render_template('form.html', form=form)
