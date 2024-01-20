@@ -12,9 +12,6 @@ def index():
 def form():
     form = ApplicationForm()
     if form.validate_on_submit():
-        user_id = secure_user_email(email=form.email.data)
-        make_user_folder(user_id=user_id)
-        save_json_user_data(user_id=user_id, json_user_data=make_json_data(form=form))
-        save_image()
-        return render_template('success.html', email=form.email.data, passport_number=form.passport_number.data)
+        user = User(email=form.email.data, flask_config=app.config, form=form)
+        return render_template('success.html', email=user.email)
     return render_template('form.html', form=form)
