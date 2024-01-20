@@ -12,6 +12,7 @@ class User:
         self.json_user_data = {}
         self.make_json_user_data()
         self.save_json_user_data()
+        self.convert_image()
         self.save_image()
     
     def make_user_folder(self):
