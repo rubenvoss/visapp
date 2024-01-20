@@ -16,6 +16,9 @@ class User(unittest.TestCase):
         )
         index_button.click()
 
+    def test_filling_out_form(self):
+        pass
+
     def tearDown(self):
         self.driver.quit()
 
