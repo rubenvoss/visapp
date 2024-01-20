@@ -7,18 +7,23 @@ from wtforms import StringField, DateField, SubmitField, EmailField
 from wtforms.validators import DataRequired, InputRequired, Length
 from werkzeug.utils import secure_filename
 
-def make_user_folder(user_id):
+def return_user_folder(user_id):
     user_folder_filepath = os.path.join(app.config['USERS_FOLDER'], user_id)
+    return user_folder_filepath
+
+def make_user_folder(user_id):
+    user_folder_filepath = return_user_folder(user_id=user_id)
     try:
         os.mkdir(user_folder_filepath)
     except Exception as e:
         print(e)
     return user_folder_filepath
 
-def save_json_data(user_id, user_folder_filepath, json_user_data):
-    json_user_data_filepath = os.path.join(user_folder_filepath, user_id + '_user_data.json')
+def save_json_user_data(user_id, json_user_data, filename_ending='_user_data.json'):
+    json_user_data_filepath = os.path.join(return_user_folder(user_id=user_id), user_id + filename_ending)
     with open(json_user_data_filepath, 'w', encoding='utf-8') as file:
         json.dump(json_user_data, file, indent=4, sort_keys=True, default=str)
+    return json_user_data_filepath
 
 def secure_user_email(email):
     email = email.replace('@', '_')
@@ -63,18 +68,11 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def form():
     form = application_form()
-
     if form.validate_on_submit():
-
-
         user_id = secure_user_email(email=form.email.data)
-        user_folder_filepath = make_user_folder(user_id=user_id)
+        make_user_folder(user_id=user_id)
+        save_json_user_data(user_id=user_id, json_user_data=make_json_data(form=form))
         
-        json_user_data = make_json_data(form=form)
-
-        save_json_data(user_id=user_id, user_folder_filepath=user_folder_filepath, json_user_data=json_user_data)
-
-        unique_id = str(shortuuid.uuid())
         # user_folder = os.path.join(app.config['USERS_FOLDER'], unique_id)
 
 
@@ -88,5 +86,5 @@ def form():
 
 
 
-        return render_template('success.html', unique_id=unique_id)
+        return render_template('success.html', email=form.email.data, passport_number=form.passport_number.data)
     return render_template('form.html', form=form)
