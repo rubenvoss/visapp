@@ -1,9 +1,11 @@
 import os, json
 from werkzeug.utils import secure_filename
+from PIL import Image
+from pillow_heif import register_heif_opener
 
 class User:
-    def __init__(self, email, flask_config, form):
-        self.email = email
+    def __init__(self, flask_config, form):
+        self.email = form.email.data
         self.user_id = secure_filename(self.email.replace('@', '_').replace('.', '_'))
         self.flask_config = flask_config
         self.user_folder_filepath = os.path.join(self.flask_config['USERS_FOLDER'], self.user_id)
@@ -12,7 +14,8 @@ class User:
         self.json_user_data = {}
         self.make_json_user_data()
         self.save_json_user_data()
-        self.save_image()
+        self.convert_image()
+        # self.save_image()
     
     def make_user_folder(self):
         try:
@@ -33,13 +36,19 @@ class User:
             json.dump(self.json_user_data, file, indent=4, sort_keys=True, default=str)
         return json_user_data_filepath
 
-    def save_image(self, filename_ending='_image.jpg'):
-            face_image_filepath = os.path.join(self.user_folder_filepath, self.user_id + filename_ending)
-            # passport_image_filepath = os.path.join(user_folder, unique_id + '_passport_image.jpg')
-            
-            # face_image_filename = unique_id + '_face_image.jpg'
-            # request.files['face_image'].save(os.path.join(user_folder, face_image_filename))
-            # passport_image_filename = unique_id + '_passport_image.jpg'
-            # request.files['passport_image'].save(os.path.join(user_folder, passport_image_filename))
+    def convert_image(self, filename_ending='_image.jpg'):
+        print(type(self.form.face_image.data))
+        register_heif_opener()
+        print(Image.open(self.form.face_image.data))
+        image = Image.open(self.form.face_image.data)
+        image.convert('RGB')
+        image.thumbnail((1000,1000))
+        image_filepath = os.path.join(self.user_folder_filepath, self.user_id + filename_ending)
+        image.save(image_filepath, optimize=True, quality=85)
+        print(Image.open(image_filepath))
+        print(os.path.getsize(image_filepath))
 
-
+    # def save_image(self, filename_ending='_image.jpg'):
+    #         face_image_filepath = os.path.join(self.user_folder_filepath, self.user_id + filename_ending)    
+    #         self.form.face_image.data.save(face_image_filepath)
+    #         return face_image_filepath
