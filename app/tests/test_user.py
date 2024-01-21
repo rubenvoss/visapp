@@ -3,10 +3,15 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 class User(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Firefox()
+        chrome_options = Options()
+        service = Service()
+        chrome_options.add_argument("--headless=new")
+        self.driver = webdriver.Chrome(service=service, options=chrome_options)
 
     def test_click_button_on_index_page(self):
         driver = self.driver
