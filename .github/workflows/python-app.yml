@@ -31,4 +31,4 @@ jobs:
     #     pylint app
     - name: Test with selenium
       run: |
-        python app/tests/test_user.py
+        MOZ_HEADLESS=1 python app/tests/test_user.py
