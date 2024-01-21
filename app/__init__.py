@@ -1,3 +1,4 @@
+"""Init file for the app package."""
 from flask import Flask
 from config import Config
 
