@@ -31,4 +31,4 @@ jobs:
     #     pylint app
     - name: Test with selenium
       run: |
-        flask --app visapp --debug run & python app/tests/test_user.py
+        flask --app visapp run & python app/tests/test_user.py
