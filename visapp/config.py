@@ -1,3 +1,4 @@
+"""Flask configuration variables."""
 import os
 
 class Config:

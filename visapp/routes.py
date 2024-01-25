@@ -1,8 +1,8 @@
 """Flask Routes."""
 from flask import render_template
-from app import app
-from app.forms import VisaApplicationForm
-from app.users import User
+from visapp import app
+from visapp.forms import VisaApplicationForm
+from visapp.users import User
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
