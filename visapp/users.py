@@ -42,6 +42,6 @@ class User:
         image = Image.open(self.form.face_image.data)
         image.convert('RGB')
         image.thumbnail((1000,1000))
-        self.image_filepath = os.path.join(self.user_folder_filepath, self.user_id + filename_ending)
+        self.image_filepath = os.path.join(self.user_folder_filepath, self.user_id +filename_ending)
         image.save(self.image_filepath, optimize=True, quality=85)
         return image
