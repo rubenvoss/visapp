@@ -63,7 +63,7 @@ from flask import render_template
 from visapp import app
 from visapp.forms import VisaApplicationForm
 from visapp.users import User
-@app.route("/form")
+@app.route("/form", methods=["GET", "POST"])
 # def form():
 #     return render_template("form.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
 def form():

@@ -4,7 +4,6 @@
     <form method="post" enctype="multipart/form-data">
 
         {{ form.csrf_token }}
-        <h1> {{session.userinfo.name}} </h1>
         {{ form.full_name.label }} {{ form.full_name(size=20) }}
         <br>
         {{ form.email.label }} {{ form.email(size=20) }}
