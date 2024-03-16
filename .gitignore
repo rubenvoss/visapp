@@ -1,3 +1,5 @@
+# settings files for production
+visapp/visapp/settings/production.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
