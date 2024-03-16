@@ -1,6 +1,3 @@
-users/
-.DS_Store
-secrets.bash
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
