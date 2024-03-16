@@ -1,0 +1,1 @@
+python visapp/manage.py runserver --settings=visapp.settings.development
