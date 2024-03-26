@@ -1,6 +1,7 @@
 # settings files
 visapp/visapp/settings/development.py
 visapp/visapp/settings/production.py
+visapp/visapp/settings/test.py
 
 
 # keyfiles
