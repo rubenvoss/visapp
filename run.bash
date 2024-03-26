@@ -1,1 +1,1 @@
-python visapp/manage.py runserver --settings=visapp.settings.development
+python visapp/manage.py runserver_plus --cert-file cert.pem --key-file key.pem --settings=visapp.settings.development localhost:3000
