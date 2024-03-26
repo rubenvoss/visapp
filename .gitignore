@@ -1,5 +1,6 @@
 # settings files for production
 visapp/visapp/settings/production.py
+visapp/visapp/settings/development.py
 
 # keyfiles
 *.pem
