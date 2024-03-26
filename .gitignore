@@ -1,6 +1,10 @@
 # settings files for production
 visapp/visapp/settings/production.py
 
+# keyfiles
+*.pem
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
